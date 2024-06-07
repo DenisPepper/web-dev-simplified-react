@@ -1,5 +1,14 @@
 //import './App.css';
+import { UserCard } from './exercises/user-card/user-card';
+import user from './exercises/user-card/user.json';
 
-export default function App() {
-  return <div>Lets get started!</div>;
+export function App() {
+  return (
+    <UserCard
+      name={user.name}
+      age={user.age}
+      phoneNumber={user.phoneNumber}
+      address={user.address}
+    />
+  );
 }
