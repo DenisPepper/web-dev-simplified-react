@@ -1,0 +1,7 @@
+.theme-toggler {
+  width: 200px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
