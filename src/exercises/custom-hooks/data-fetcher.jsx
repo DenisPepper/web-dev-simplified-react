@@ -14,10 +14,9 @@ const URLS = {
 };
 
 export function DataFetcher() {
-  const { data, isLoading, error, setData, setDataType } = useDataFetcher(URLS);
+  const { data, isLoading, error, setDataType } = useDataFetcher(URLS);
 
   const handleDataTypeInput = (value) => {
-    setData([]);
     setDataType(value);
   };
 
@@ -117,12 +116,15 @@ const useDataFetcher = (URLS) => {
     const controller = new AbortController();
 
     if (!dataType) return;
-
+    setData([]);
     setIsLoading(true);
     setError('');
 
     fetch(`${URLS[dataType]}?_start=0&_limit=3`, { signal: controller.signal })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) return response.json();
+        return Promise.reject(response);
+      })
       .then((data) => setData(data))
       .catch((err) => {
         if (err.name !== 'AbortError') setError(err.message);
@@ -139,7 +141,6 @@ const useDataFetcher = (URLS) => {
     data,
     isLoading,
     error,
-    setData,
     setDataType,
   };
 };
