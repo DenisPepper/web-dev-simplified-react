@@ -1,0 +1,22 @@
+.data-fetcher {
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.data-fetcher__result {
+  align-self: center;
+}
+
+.data-fetcher__input-container {
+  width: 220px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.data-fetcher__label {
+  padding-left: 20px;
+}
