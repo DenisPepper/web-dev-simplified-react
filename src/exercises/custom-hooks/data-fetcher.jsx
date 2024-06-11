@@ -127,7 +127,10 @@ const useDataFetcher = (URLS) => {
       .catch((err) => {
         if (err.name !== 'AbortError') setError(err.message);
       })
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        if (controller.signal.aborted) return;
+        setIsLoading(false);
+      });
 
     return () => controller.abort();
   }, [dataType]);
