@@ -21,14 +21,25 @@ export function DataFetcher() {
     setDataType(value);
   };
 
-  const result = error ? <Error message={error} /> : <Items items={data} />;
+  {
+    /* return (
+    <div className='data-fetcher'>
+      <DataTypePicker onChangeHandler={handleDataTypeInput} />
+      <div className='data-fetcher__result'>
+        {isLoading && <Loading />}
+        {result}
+      </div>
+    </div>
+  );*/
+  }
 
   return (
     <div className='data-fetcher'>
       <DataTypePicker onChangeHandler={handleDataTypeInput} />
       <div className='data-fetcher__result'>
         {isLoading && <Loading />}
-        {result}
+        {error && <Error message={error} />}
+        {!!data.length && <Items items={data} />}
       </div>
     </div>
   );
@@ -108,20 +119,15 @@ const useDataFetcher = (URLS) => {
     if (!dataType) return;
 
     setIsLoading(true);
+    setError('');
 
     fetch(`${URLS[dataType]}?_start=0&_limit=3`)
       .then((response) => response.json())
-      .then((data) =>
-        setTimeout(() => {
-          setIsLoading(false);
-          setData(data);
-        }, 1000)
-      )
+      .then((data) => setData(data))
       .catch((err) => {
-        if (err.name !== 'AbortError') {
-          setError(err.message);
-        }
-      });
+        if (err.name !== 'AbortError') setError(err.message);
+      })
+      .finally(() => setIsLoading(false));
 
     return () => abortController.abort();
   }, [dataType]);

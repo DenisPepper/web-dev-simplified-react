@@ -1,5 +1,5 @@
 .data-fetcher {
-  border: 1px solid black;
+  border-top: 1px solid black;
   border-radius: 8px;
   padding: 20px;
   display: flex;
