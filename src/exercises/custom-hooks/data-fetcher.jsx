@@ -114,14 +114,14 @@ const useDataFetcher = (URLS) => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const abortController = new AbortController();
+    const controller = new AbortController();
 
     if (!dataType) return;
 
     setIsLoading(true);
     setError('');
 
-    fetch(`${URLS[dataType]}?_start=0&_limit=3`)
+    fetch(`${URLS[dataType]}?_start=0&_limit=3`, { signal: controller.signal })
       .then((response) => response.json())
       .then((data) => setData(data))
       .catch((err) => {
@@ -129,7 +129,7 @@ const useDataFetcher = (URLS) => {
       })
       .finally(() => setIsLoading(false));
 
-    return () => abortController.abort();
+    return () => controller.abort();
   }, [dataType]);
 
   return {
