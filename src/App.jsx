@@ -1,5 +1,5 @@
-import { CounterWithReducer } from './exercises/use-reducer/counter-with-reducer';
+import { DataFetcher } from './exercises/custom-hooks/data-fetcher';
 
 export function App() {
-  return <CounterWithReducer initialState={0} />;
+  return <DataFetcher />;
 }

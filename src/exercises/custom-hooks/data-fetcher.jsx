@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useReducer } from 'react';
 import './data-fetcher.css';
 
 const URL_KEYS = {
@@ -14,10 +14,13 @@ const URLS = {
 };
 
 export function DataFetcher() {
-  const { data, isLoading, error, setDataType } = useDataFetcher(URLS);
+  const {
+    state: { isLoading, error, data },
+    dispatch,
+  } = useDataFetcher(URLS);
 
   const handleDataTypeInput = (value) => {
-    setDataType(value);
+    dispatch({ type: Actions.onSetDataType, payload: value });
   };
 
   {
@@ -106,42 +109,61 @@ function RadioInput(props) {
   );
 }
 
+const Actions = {
+  onStart: 'ON_START',
+  onSuccess: 'ON_SUCCESS',
+  onError: 'ON_ERROR',
+  onSetDataType: 'ON_SET_DATA_TYPE',
+};
+
+const reducer = (state, { type, payload }) => {
+  if (type === Actions.onSetDataType) return { ...state, dataType: payload };
+  if (type === Actions.onStart)
+    return { ...state, data: [], isLoading: true, error: '' };
+  if (type === Actions.onSuccess)
+    return { ...state, data: payload, isLoading: false, error: '' };
+  if (type === Actions.onError)
+    return { ...state, isLoading: false, error: payload };
+  return state;
+};
+
 const useDataFetcher = (URLS) => {
-  const [dataType, setDataType] = useState('');
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [state, dispatch] = useReducer(reducer, {
+    dataType: '',
+    data: [],
+    isLoading: false,
+    error: '',
+  });
 
   useEffect(() => {
     const controller = new AbortController();
 
-    if (!dataType) return;
-    setData([]);
-    setIsLoading(true);
-    setError('');
+    if (!state.dataType) return;
 
-    fetch(`${URLS[dataType]}?_start=0&_limit=3`, { signal: controller.signal })
+    dispatch({ type: Actions.onStart });
+
+    fetch(`${URLS[state.dataType]}?_start=0&_limit=3`, {
+      signal: controller.signal,
+    })
       .then((response) => {
         if (response.ok) return response.json();
-        return Promise.reject(response);
+        throw new Error();
       })
-      .then((data) => setData(data))
+      .then((data) => dispatch({ type: Actions.onSuccess, payload: data }))
       .catch((err) => {
-        if (err.name !== 'AbortError') setError(err.message);
-      })
-      .finally(() => {
-        if (controller.signal.aborted) return;
-        setIsLoading(false);
+        if (err.name !== 'AbortError')
+          dispatch({
+            type: Actions.onError,
+            payload: err.message === undefined ? err.message : 'fetch error',
+          });
       });
 
     return () => controller.abort();
-  }, [dataType]);
+  }, [state.dataType, URLS]);
 
   return {
-    data,
-    isLoading,
-    error,
-    setDataType,
+    state,
+    dispatch,
   };
 };
 
