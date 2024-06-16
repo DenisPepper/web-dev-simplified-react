@@ -1,5 +1,5 @@
-import { DataFetcher } from './exercises/custom-hooks/data-fetcher';
+import { Parent } from './exercises/use-context/parent';
 
 export function App() {
-  return <DataFetcher />;
+  return <Parent />;
 }

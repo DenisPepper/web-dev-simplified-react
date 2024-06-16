@@ -24,7 +24,7 @@ export function ThemeToggler() {
   );
 }
 
-const useThemeToggler = ({ isDark }) => {
+export const useThemeToggler = ({ isDark }) => {
   const [isDarkTheme, setTheme] = useState(isDark);
 
   const toggle = () => setTheme((isDark) => !isDark);
