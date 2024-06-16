@@ -1,4 +1,4 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, ScrollRestoration } from 'react-router-dom';
 
 export function AppLayout() {
   return (
@@ -16,6 +16,7 @@ export function AppLayout() {
           </li>
         </ul>
       </nav>
+      <ScrollRestoration />
       <div className='app-container'>
         <Outlet />
       </div>
