@@ -1,14 +1,10 @@
+import { InfoMessage } from './exercises/portal/info-message';
+
 export function App() {
   return (
-    <>
-      <div style={{ backgroundColor: 'green' }}>
-        {import.meta.env.VITE_CONST}
-      </div>
-      <br />
-      <div style={{ backgroundColor: 'red' }}>
-        <span>переменная окружения SERVER будет не доступна на клиенте: </span>
-        {import.meta.env.SERVER}
-      </div>
-    </>
+    <div>
+      react portal demo
+      <InfoMessage>this message will render in info-msg container, out of root container</InfoMessage>
+    </div>
   );
 }
