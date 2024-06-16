@@ -5,8 +5,9 @@ export function SomeForm() {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    const formData = new FormData(evt.currentTarget);
-    console.log(formData.get('message'));
+    //const formData = new FormData(evt.currentTarget);
+    //console.log(formData.get('message'));
+    console.log(inputRef.current.value);
   };
 
   return (
