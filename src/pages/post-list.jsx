@@ -1,3 +1,7 @@
+import { useLoaderData } from 'react-router-dom';
+
 export function PostList() {
-  return <div>PostList</div>;
+  const data = useLoaderData();
+  
+  return <div>post list length: {data.length}</div>;
 }
