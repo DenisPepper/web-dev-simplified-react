@@ -1,7 +1,13 @@
 import { useLoaderData } from 'react-router-dom';
 
 export function PostList() {
-  const data = useLoaderData();
-  
-  return <div>post list length: {data.length}</div>;
+  const items = useLoaderData();
+
+  return (
+    <ul className='post-list'>
+      {items.map((item) => (
+        <li key={item.id}>{item.title}</li>
+      ))}
+    </ul>
+  );
 }
