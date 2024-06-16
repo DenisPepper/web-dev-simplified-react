@@ -10,3 +10,14 @@ export const loadPosts = async ({ request: { signal } }) => {
 
     return data;
 }
+
+export const loadPost = async ({ request: { signal }, params: { id } }) => {
+    const { data } = await axios.get(`http://127.0.0.1:3000/posts/${id}`, {
+        signal,
+        headers: {
+            'content-type': "application/json"
+        }
+    });
+
+    return data;
+}

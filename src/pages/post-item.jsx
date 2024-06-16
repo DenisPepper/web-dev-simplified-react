@@ -1,3 +1,7 @@
+import { useLoaderData } from 'react-router-dom';
+
 export function PostItem() {
-    return(<div>Post Item</div>);
+  const item = useLoaderData();
+
+  return <div>{item.title ?? 'post not found'}</div>;
 }

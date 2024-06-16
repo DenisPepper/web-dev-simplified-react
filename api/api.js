@@ -6,9 +6,15 @@ const port = 3000
 
 app.use(cors());
 
+const posts = [{ id: 1, title: 'post 1' }, { id: 2, title: 'post 2' }];
 
 app.get('/posts', (req, res) => {
-    res.json([{ id: 1, title: 'post 1' }, { id: 2, title: 'post 2' }]);
+    res.json(posts);
+})
+
+app.get('/posts/:id', (req, res) => {
+    const postId = Number(req.params.id);
+    res.json(posts.find((post) => post.id === postId));
 })
 
 app.get('/users', (req, res) => {
