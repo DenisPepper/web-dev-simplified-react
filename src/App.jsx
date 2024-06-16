@@ -1,10 +1,5 @@
-import { InfoMessage } from './exercises/portal/info-message';
+import { SomeForm } from './exercises/forward-ref/some-form';
 
 export function App() {
-  return (
-    <div>
-      react portal demo
-      <InfoMessage>this message will render in info-msg container, out of root container</InfoMessage>
-    </div>
-  );
+  return <SomeForm />;
 }
