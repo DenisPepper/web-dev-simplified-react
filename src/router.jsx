@@ -4,6 +4,7 @@ import { PostList } from './pages/post-list';
 import { UserList } from './pages/user-list';
 import { TodoList } from './pages/todo-list';
 import { loadPosts } from './router-loaders/post-loader';
+import { loadUsers } from './router-loaders/user-loader';
 
 const routerConfig = {
   path: '/',
@@ -17,7 +18,7 @@ const routerConfig = {
         { path: ':id', element: <h1>Post with self id</h1> },
       ],
     },
-    { path: 'users', element: <UserList /> },
+    { path: 'users', element: <UserList />, loader: loadUsers },
     { path: 'todos', element: <TodoList /> },
   ],
 };
