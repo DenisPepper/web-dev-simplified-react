@@ -7,6 +7,10 @@ export class ErrorBorder extends React.Component {
     return { hasError: true };
   }
 
+  componentDidCatch(error) {
+    console.log(error);
+  }
+
   render() {
     if (this.state.hasError) return this.props.fallback;
     return this.props.children;
